@@ -6,11 +6,9 @@ LIBS= -lsfml-system -lsfml-window -lsfml-graphics
 BIN= bin/game
 
 all: bin output ${BIN}
-	@echo ${SOURCES}
-	@echo ${OBJECTS}
 
 run: bin output ${BIN}
-	${BIN}
+	./${BIN}
 src/%.cpp: include/%.hpp
 
 output/%.o: src/%.cpp
@@ -27,3 +25,4 @@ output:
 
 clean:
 	rm -f ${OBJECTS} ${BIN}
+	
