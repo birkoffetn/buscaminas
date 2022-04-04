@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 bin/*
 output/*
 *.exe
-=======
 # Prerequisites
 *.d
 
@@ -35,4 +33,3 @@ output/*
 *.exe
 *.out
 *.app
->>>>>>> a649576e192d9a537a8fb0ca6401b2347258f830

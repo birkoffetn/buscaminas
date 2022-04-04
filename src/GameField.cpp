@@ -12,7 +12,7 @@ GameField::GameField(unsigned nFil, unsigned nCol, unsigned mines){
         for(unsigned j = 0; j < numCol(); ++j){
             auto& cell = mCells[i][j];
             cell.setCoords(i, j);
-            cell.setPosition(i* 128, j* 128);
+            cell.setPosition(j* 128, i* 128);
             cell.setTexture(mTexture);
             cell.setState(State::Hide);
         }

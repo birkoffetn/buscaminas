@@ -10,8 +10,9 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Minesweeper");
     window.setVerticalSyncEnabled(true);
 
-    GameField field(5, 5, 5);
+    GameField field(4, 5, 5);
     //field.setScale(0.3, 0.3);
+    field.setPosition(128, 128);
 
     sf::Texture texture;
     texture.loadFromFile("assets/casillas.png");
@@ -28,12 +29,13 @@ int main(){
                 window.close();
             }
             if(event.type == sf::Event::MouseButtonPressed){
-                auto fila= event.mouseButton.x/128;
-                auto columna= event.mouseButton.y/128;
+                auto pos= field.getInverseTransform().transformPoint(event.mouseButton.x, event.mouseButton.y);
+                unsigned fila= pos.y/128;
+                unsigned columna= pos.x/128;
                 std::cout<<"fila: "<<fila<<" columna: "<<columna<<std::endl;
                 //std::cout<<field.mines()<<std::endl;
                 if(event.mouseButton.button == sf::Mouse::Left){
-                    field.activate(fila, columna);
+                    field.activate(pos.y/ 128, pos.x/ 128);
                 }
                 if(event.mouseButton.button == sf::Mouse::Right){
                     field.check(fila, columna);

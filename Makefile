@@ -1,5 +1,5 @@
 SOURCES= $(wildcard src/*.cpp)
-OBJECTS= $(patsubst src/%.cpp,output/%.o,${SOURCES})
+OBJECTS= $(patsubst src/%.cpp,output/%.o,${SOURCES}) resource.o
 INCLUDE= -Iinclude
 CXXFLAGS= -Wall -ggdb -std=c++11 ${INCLUDE}
 LIBS= -lsfml-system -lsfml-window -lsfml-graphics
@@ -25,4 +25,7 @@ output:
 
 clean:
 	rm -f ${OBJECTS} ${BIN}
-	
+
+
+resource.o: resource.rc game.ico
+	windres $< $@	
