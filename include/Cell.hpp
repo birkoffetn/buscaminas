@@ -19,6 +19,7 @@ public:
     void setCoords(unsigned fil, unsigned col);
     unsigned activate();
     void check();
+    void detonate();
     void setState(State state);
     
     void setMines(unsigned mines){ mMines= mines;}

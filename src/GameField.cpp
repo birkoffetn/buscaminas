@@ -1,10 +1,11 @@
 #include"GameField.hpp"
+#include"constants.hpp"
 #include<cassert>
 
 GameField::GameField(unsigned nFil, unsigned nCol, unsigned mines){
     mNumFil= nFil;
     mNumCol= nCol;
-    mTexture.loadFromFile("assets/casillas.png");
+    mTexture.loadFromFile(CELL_TEXTURE_PATH);
 
     mCells.resize(numFil());
     for(unsigned i = 0; i < numFil(); ++i){
@@ -47,10 +48,7 @@ void GameField::activate(unsigned fil, unsigned col){
         else if(mines== MINA){
             for(unsigned fil = 0; fil < numFil(); ++fil){
                 for(unsigned col = 0; col < numCol(); ++col){
-                    auto& cell= mCells[fil][col];
-                    if(cell.mines() == MINA){
-                        cell.activate();
-                    }
+                    mCells[fil][col].detonate();
                 }
             }
         }
@@ -111,10 +109,10 @@ void GameField::countMines(){
 }
 
 void GameField::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+    states.transform.combine(getTransform());
     for(const auto& row: mCells){
-        //states.transform*= getTransform();
         for(const auto& cell: row){
-            target.draw(cell, getTransform());
+            target.draw(cell, states);
         }
     }
 }

@@ -58,3 +58,11 @@ void Cell::setState(State state){
             break;
     }
 }
+
+void Cell::detonate(){
+    if(mines()== MINA){
+        mState= State::Show;
+        setTextureRect(rects.at(Cuadros::Bomba));
+        setColor(sf::Color::Red);
+    }
+}
