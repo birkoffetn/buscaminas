@@ -1,8 +1,8 @@
 #ifndef __CONSTANTS__HPP__
 #define __CONSTANTS__HPP__
 
-const char* const FONT_PATH = "fonts/arial.ttf";
-unsigned const FONT_SIZE = 32;
+const char* const FONT_PATH = "assets/font.ttf";
+unsigned const FONT_SIZE = 48;
 
 const char* const BUTTON_TEXTURE_PATH = "assets/button.png";
 const char* const CELL_TEXTURE_PATH = "assets/cell.png";

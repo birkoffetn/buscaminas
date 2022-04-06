@@ -8,7 +8,7 @@
 class Board: public sf::Drawable, public sf::Transformable{
 public:
     Board();
-    void init(unsigned fieldWidth, unsigned numMines);
+    void init(unsigned width);
     void update(float dt);
     void incrementCheck();
 protected:

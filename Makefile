@@ -1,7 +1,7 @@
 SOURCES= $(wildcard src/*.cpp)
 OBJECTS= $(patsubst src/%.cpp,output/%.o,${SOURCES}) resource.o
 INCLUDE= -Iinclude
-CXXFLAGS= -Wall -ggdb -std=c++11 ${INCLUDE}
+CXXFLAGS= -Wall -Wextra -ggdb -std=c++11 ${INCLUDE}
 LIBS= -lsfml-system -lsfml-window -lsfml-graphics
 BIN= bin/game
 

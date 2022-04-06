@@ -5,9 +5,8 @@
 #include<iostream>
 
 Button::Button(){
-    if(!mTexture.loadFromFile(BUTTON_TEXTURE_PATH)){
-        std::cout << "Error loading button texture" << std::endl;
-    }
+    mTexture.loadFromFile(BUTTON_TEXTURE_PATH);
+    
     setTexture(mTexture);
     fillRects();
     setTextureRect(mRectsHappy[random(0, mRectsHappy.size()-1)]);
