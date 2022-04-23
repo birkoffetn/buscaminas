@@ -1,6 +1,9 @@
-#include"include/GameField.hpp"
+#include"include/Field.hpp"
 #include"include/Board.hpp"
 #include"include/constants.hpp"
+#include"include/GameScene.hpp"
+
+#include"include/MenuScene.hpp"
 
 #include<SFML/Graphics.hpp>
 
@@ -9,13 +12,18 @@
 using namespace std;
 
 int main(){
-
     sf::RenderWindow window(sf::VideoMode(800, 600), "Minesweeper");
     window.setVerticalSyncEnabled(true);
 
-    float valor= -0.2f;
-    std::cout<<"valor: "<<valor<<" int: "<<int(valor)<<std::endl;
-    std::cout<<"valor: -1"<<" unsigned: "<<unsigned(-1)<<std::endl;
+    MenuScene menu;
+    menu.setWindow(window);
+
+    menu.run();
+
+    GameScene game;
+    game.run();
+
+    /*
 
     GameField field(6, 6, 8);
     field.setScale(0.5, 0.5);
@@ -57,6 +65,6 @@ int main(){
         window.draw(field);
         window.draw(board);
         window.display();
-    }
+    }*/
     return EXIT_SUCCESS;
 }

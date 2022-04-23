@@ -1,19 +1,33 @@
-#ifndef __FIELD_HPP__
-#define __FIELD_HPP__
+#ifndef __GAMEFIELD_HPP__
+#define __GAMEFIELD_HPP__
 
+#include"Field.hpp"
+#include"Cell.hpp"
 
-class Field{
+#include<SFML/Graphics.hpp>
+#include<algorithm>
+#include<vector>
+#include<random>
+
+class GameField: public sf::Drawable, public sf::Transformable{
 public:
-    virtual void activate(unsigned fil, unsigned col)= 0;
-    
-    virtual void check(unsigned fil, unsigned col)= 0;
-    virtual ~Field(){}
+    GameField();
+    GameField(unsigned fil, unsigned col, unsigned mines);
+    void resizeAndFill(unsigned fil, unsigned col, unsigned mines);
+    void activate(unsigned fil, unsigned col);
+    void check(unsigned fil, unsigned col);
 protected:
+    void fillMines(unsigned fil, unsigned col);
+    void countMines();
     
-    virtual void fillMines(unsigned fil, unsigned col)= 0;
-    
-    virtual void countMines()= 0;
-};
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+private:
+    unsigned mNumFils, mNumCols, mMines;
+    std::vector<std::vector<Cell>> mCells;
+    sf::Texture mTexture;
+    bool mIsStarted;
 
+    unsigned getNumMines(unsigned fil, unsigned col) const;
+};
 
 #endif

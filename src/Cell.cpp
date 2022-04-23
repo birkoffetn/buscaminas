@@ -16,15 +16,8 @@ std::vector<sf::IntRect> Cell::rects= {
 };
 
 Cell::Cell(){
-    mFil = 0;
-    mCol = 0;
     mMines = 0;
     setState(State::Hide);
-}
-
-void Cell::setCoords(unsigned fil, unsigned col){
-    mFil = fil;
-    mCol = col;
 }
 
 unsigned Cell::activate(){

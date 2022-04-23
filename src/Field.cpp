@@ -1,18 +1,26 @@
-#include"GameField.hpp"
+#include"Field.hpp"
 #include"constants.hpp"
 #include<cassert>
 
-GameField::GameField(unsigned nFil, unsigned nCol, unsigned mines){
-    mNumFil= nFil;
-    mNumCol= nCol;
+GameField::GameField(){
     mTexture.loadFromFile(CELL_TEXTURE_PATH);
+    resizeAndFill(6, 6, 10);
+}
 
-    mCells.resize(numFil());
-    for(unsigned i = 0; i < numFil(); ++i){
-        mCells[i].resize(numCol());
-        for(unsigned j = 0; j < numCol(); ++j){
+GameField::GameField(unsigned nFil, unsigned nCol, unsigned mines){
+    mTexture.loadFromFile(CELL_TEXTURE_PATH);
+    resizeAndFill(nFil, nCol, mines);
+}
+
+void GameField::resizeAndFill(unsigned nFil, unsigned nCol, unsigned mines){
+    mNumFils= nFil;
+    mNumCols= nCol;
+
+    mCells.resize(mNumFils);
+    for(unsigned i = 0; i < mNumFils; ++i){
+        mCells[i].resize(mNumCols);
+        for(unsigned j = 0; j < mNumCols; ++j){
             auto& cell = mCells[i][j];
-            cell.setCoords(i, j);
             cell.setPosition(j* 128, i* 128);
             cell.setTexture(mTexture);
             cell.setState(State::Hide);
@@ -23,7 +31,7 @@ GameField::GameField(unsigned nFil, unsigned nCol, unsigned mines){
 }
 
 void GameField::activate(unsigned fil, unsigned col){
-    if(fil< numFil() && col < numCol()){
+    if(fil< mNumFils && col < mNumCols){
         if(false== mIsStarted){
             fillMines(fil, col);
             countMines();
@@ -46,8 +54,8 @@ void GameField::activate(unsigned fil, unsigned col){
             activate(fil+1, col+1);
         }
         else if(mines== MINA){
-            for(unsigned fil = 0; fil < numFil(); ++fil){
-                for(unsigned col = 0; col < numCol(); ++col){
+            for(unsigned fil = 0; fil < mNumFils; ++fil){
+                for(unsigned col = 0; col < mNumCols; ++col){
                     mCells[fil][col].detonate();
                 }
             }
@@ -57,18 +65,18 @@ void GameField::activate(unsigned fil, unsigned col){
 }
 
 void GameField::check(unsigned fil, unsigned col){
-    if(fil< numFil() && col < numCol()){
+    if(fil< mNumFils && col < mNumCols){
         mCells[fil][col].check();
     }
 }
 
 void GameField::fillMines(unsigned fil, unsigned col){
     auto vector= std::vector<Cell*>();
-    const unsigned maxFil= numFil()-1;
-    const unsigned maxCol= numCol()-1;
+    const unsigned maxFil= mNumFils-1;
+    const unsigned maxCol= mNumCols-1;
 
-    for(unsigned i = 0; i < numFil(); ++i){
-        for(unsigned j = 0; j < numCol(); ++j){
+    for(unsigned i = 0; i < mNumCols; ++i){
+        for(unsigned j = 0; j < mNumCols; ++j){
             auto left= j> 0? j- 1: 0;
             auto right= j< maxCol? j+ 1: j;
             auto top= i> 0? i- 1: 0;
@@ -81,7 +89,7 @@ void GameField::fillMines(unsigned fil, unsigned col){
     }
     assert(vector.size()>= mMines);
     std::shuffle(vector.begin(), vector.end(), std::mt19937{std::random_device{}()});
-    vector.resize(mines());
+    vector.resize(mMines);
     for(auto cell: vector){
         assert(cell!= nullptr);
         cell->setMines(MINA);
@@ -89,8 +97,8 @@ void GameField::fillMines(unsigned fil, unsigned col){
 }
 
 void GameField::countMines(){
-    for(unsigned fil= 0; fil< numFil(); ++fil){
-        for(unsigned col= 0; col< numCol(); ++col){
+    for(unsigned fil= 0; fil< mNumFils; ++fil){
+        for(unsigned col= 0; col< mNumCols; ++col){
             auto& cell= mCells[fil][col];
             if(cell.mines() == MINA){
                 continue;
@@ -118,7 +126,7 @@ void GameField::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 }
 
 unsigned GameField::getNumMines(unsigned fil, unsigned col) const{
-    if(fil< numFil() && col< numCol()){
+    if(fil< mNumFils && col< mNumCols){
         if(MINA== mCells[fil][col].mines()){
             return 1;
         }

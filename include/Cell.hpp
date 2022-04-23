@@ -26,7 +26,7 @@ public:
     unsigned mines() const{ return mMines; }
     State state() const{ return mState; }
 private:
-    unsigned mFil, mCol, mMines;
+    unsigned mMines;
     State mState;
     static std::vector<sf::IntRect> rects;
 };

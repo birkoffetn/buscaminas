@@ -1,6 +1,9 @@
 bin/*
 output/*
 *.exe
+.vscode
+
+
 # Prerequisites
 *.d
 

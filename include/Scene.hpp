@@ -10,17 +10,21 @@ public:
     static const int CONTINUE_SCENE = -2;
 
     int run();
-    virtual void init();
+
+    static void setWindow(sf::RenderWindow& window);
 
 protected:
-    Scene(sf::RenderWindow &window);
-    virtual int readEvent(const sf::Event event);
-    virtual void updateLogic(float dt);
-    virtual void draw();
+    Scene();
+    virtual void init() = 0;
+    virtual int readEvent(const sf::Event event)= 0;
+    virtual void updateLogic(float dt)= 0;
+    virtual void draw(sf::RenderTarget& target)= 0;
     virtual ~Scene();
 
+    void resize(unsigned width, unsigned height);
+    sf::Vector2u getSize() const;
 private:
-    sf::RenderWindow &mWindow;
+    static sf::RenderWindow *window;
     sf::Clock mClock;
 };
 

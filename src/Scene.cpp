@@ -2,28 +2,40 @@
 
 #include <SFML/Graphics.hpp>
 
-Scene::Scene(sf::RenderWindow &window) : mWindow(window) {}
+sf::RenderWindow *Scene::window = nullptr;
+
+void Scene::setWindow(sf::RenderWindow& window)
+{
+    Scene::window = &window;
+}
+
+Scene::Scene() {}
 
 Scene::~Scene() {}
 
 int Scene::run()
 {
+    if(window== nullptr){
+        return TERMINATE_APP;
+    }
+
     init();
+    mClock.restart();
     
-    while (mWindow.isOpen())
+    while (window->isOpen())
     {
         sf::Event event;
-        while (mWindow.pollEvent(event))
+        while (window->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
-                mWindow.close();
+                window->close();
+                return TERMINATE_APP;
             }
             if (event.type == sf::Event::Resized)
             {
-                // update the view to the new size of the window
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-                mWindow.setView(sf::View(visibleArea));
+                window->setView(sf::View(visibleArea));
             }
             auto status = readEvent(event);
             if (status != CONTINUE_SCENE)
@@ -32,21 +44,19 @@ int Scene::run()
             }
         }
         updateLogic(mClock.restart().asSeconds());
-        draw();
+        window->clear();
+        draw(*window);
+        window->display();
     }
     return TERMINATE_APP;
 }
 
-void Scene::init()
+void Scene::resize(unsigned width, unsigned height)
 {
-    mClock.restart();
+    window->setSize(sf::Vector2u(width, height));
 }
 
-int Scene::readEvent(const sf::Event)
+sf::Vector2u Scene::getSize() const
 {
-    return CONTINUE_SCENE;
+    return window->getSize();
 }
-
-void Scene::updateLogic(float) {}
-
-void Scene::draw() {}
