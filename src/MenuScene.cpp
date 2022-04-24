@@ -33,7 +33,7 @@ void MenuScene::init(){
     }
 }
 
-int MenuScene::readEvent(const sf::Event event){
+GameState MenuScene::readEvent(const sf::Event event){
     if(event.type == sf::Event::MouseMoved){
         for(auto& option: mOptions){
             if(option.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y)){
@@ -47,15 +47,20 @@ int MenuScene::readEvent(const sf::Event event){
         for(auto& option: mOptions){
             if(option.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
                 if(option.getString() == "Salir"){
-                    return TERMINATE_APP;
+                    return GameState::Exit;
                 }
                 if(option.getString() == "Continuar"){
-                    return CONTINUE_SCENE;
+                    return GameState::Game;
                 }
             }
         }
     }
-    return CONTINUE_SCENE;
+    if(event.type == sf::Event::KeyPressed){
+        if(event.key.code== sf::Keyboard::Escape){
+            return GameState::Game;
+        }
+    }
+    return GameState::Menu;
 }
 
 void MenuScene::updateLogic(float ){

@@ -1,6 +1,7 @@
 #include "Scene.hpp"
 
 #include <SFML/Graphics.hpp>
+#include <exception>
 
 sf::RenderWindow *Scene::window = nullptr;
 
@@ -13,10 +14,10 @@ Scene::Scene() {}
 
 Scene::~Scene() {}
 
-int Scene::run()
+GameState Scene::run()
 {
     if(window== nullptr){
-        return TERMINATE_APP;
+        throw std::runtime_error("On run Scene - window is nullptr");
     }
 
     init();
@@ -30,15 +31,15 @@ int Scene::run()
             if (event.type == sf::Event::Closed)
             {
                 window->close();
-                return TERMINATE_APP;
+                return GameState::Exit;
             }
             if (event.type == sf::Event::Resized)
             {
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
                 window->setView(sf::View(visibleArea));
             }
-            auto status = readEvent(event);
-            if (status != CONTINUE_SCENE)
+            GameState status = readEvent(event);
+            if (status != GameState::Continue)
             {
                 return status;
             }
@@ -48,7 +49,7 @@ int Scene::run()
         draw(*window);
         window->display();
     }
-    return TERMINATE_APP;
+    return GameState::Continue;
 }
 
 void Scene::resize(unsigned width, unsigned height)

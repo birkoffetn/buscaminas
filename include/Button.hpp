@@ -7,12 +7,12 @@
 class Button: public sf::Sprite{
 public:
     Button();
-    bool clicked(sf::Event event);
+    void makeSad();
+    void makeHappy();
 private:
     sf::Texture mTexture;
     std::vector<sf::IntRect> mRectsHappy;
     std::vector<sf::IntRect> mRectsSad;
-
     void fillRects();
 };
 

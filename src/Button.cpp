@@ -9,19 +9,15 @@ Button::Button(){
     
     setTexture(mTexture);
     fillRects();
-    setTextureRect(mRectsHappy[random(0, mRectsHappy.size()-1)]);
+    makeHappy();
 }
 
-bool Button::clicked(sf::Event event){
-    if(event.type == sf::Event::MouseButtonPressed){
-        if(event.mouseButton.button == sf::Mouse::Left){
-            if(getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))){
-                setTextureRect(mRectsSad[random(ZERO, mRectsSad.size()-1)]);
-                return true;
-            }
-        }
-    }
-    return false;
+void Button::makeSad(){
+    setTextureRect(mRectsSad[random(0, mRectsSad.size()-1)]);
+}
+
+void Button::makeHappy(){
+    setTextureRect(mRectsHappy[random(0, mRectsHappy.size()-1)]);
 }
 
 void Button::fillRects(){

@@ -4,7 +4,7 @@
 #include<SFML/Graphics.hpp>
 #include<vector>
 
-enum class State{
+enum CellState{
     Hide, Show, Check
 };
 
@@ -16,19 +16,21 @@ const unsigned MINA= 9;
 class Cell: public sf::Sprite{
 public:
     Cell();
-    void setCoords(unsigned fil, unsigned col);
     unsigned activate();
     void check();
     void detonate();
-    void setState(State state);
     
     void setMines(unsigned mines){ mMines= mines;}
     unsigned mines() const{ return mMines; }
-    State state() const{ return mState; }
+
 private:
     unsigned mMines;
     State mState;
+
     static std::vector<sf::IntRect> rects;
+
+    CellState state() const{ return mState; }
+    void setState(State state);
 };
 
 #endif

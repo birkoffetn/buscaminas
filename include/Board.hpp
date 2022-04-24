@@ -8,19 +8,21 @@
 class Board: public sf::Drawable, public sf::Transformable{
 public:
     Board();
-    void init(unsigned width);
+    void initialize(unsigned numMines, unsigned width);
     void update(float dt);
-    void incrementCheck();
+    void incrementCheck(int nChecks);
 protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
-    sf::Text mCountChecks;
+    sf::Text mCounter;
     sf::Text mCronometer;
     sf::Font mFont;
     Button mButton;
     float mSecondsElapsed;
-    int mChecksRemaining;
+    int mMinesRemaining;
 
+    sf::String counterToString() const;
+    sf::String cronometerToString() const;
 };
 
 #endif

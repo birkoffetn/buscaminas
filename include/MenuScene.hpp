@@ -11,7 +11,7 @@ public:
     MenuScene();
     void init() override;
 protected:    
-    virtual int readEvent(const sf::Event event) override;
+    virtual GameState readEvent(const sf::Event event) override;
     virtual void updateLogic(float dt) override;
     virtual void draw(sf::RenderTarget& target) override;
 private:

@@ -12,7 +12,6 @@
 class GameField: public sf::Drawable, public sf::Transformable{
 public:
     GameField();
-    GameField(unsigned fil, unsigned col, unsigned mines);
     void resizeAndFill(unsigned fil, unsigned col, unsigned mines);
     void activate(unsigned fil, unsigned col);
     void check(unsigned fil, unsigned col);

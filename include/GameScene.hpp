@@ -10,7 +10,7 @@ class GameScene: public Scene{
 public:
     void init();
 protected:
-    int readEvent(const sf::Event event) override;
+    GameState readEvent(const sf::Event event) override;
     void updateLogic(float dt) override;
     void draw(sf::RenderTarget& target) override;
 private:

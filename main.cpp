@@ -1,26 +1,11 @@
-#include"include/Field.hpp"
-#include"include/Board.hpp"
-#include"include/constants.hpp"
-#include"include/GameScene.hpp"
-
-#include"include/MenuScene.hpp"
-
-#include<SFML/Graphics.hpp>
+#include"include/Minesweeper.hpp"
 
 #include<iostream>
 
 using namespace std;
 
 int main(){
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Minesweeper");
-    window.setVerticalSyncEnabled(true);
-
-    MenuScene menu;
-    menu.setWindow(window);
-
-    menu.run();
-
-    GameScene game;
+    Minesweeper game;
     game.run();
 
     /*
@@ -66,5 +51,5 @@ int main(){
         window.draw(board);
         window.display();
     }*/
-    return EXIT_SUCCESS;
+    return 0;
 }

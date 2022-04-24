@@ -7,15 +7,13 @@ GameField::GameField(){
     resizeAndFill(6, 6, 10);
 }
 
-GameField::GameField(unsigned nFil, unsigned nCol, unsigned mines){
-    mTexture.loadFromFile(CELL_TEXTURE_PATH);
-    resizeAndFill(nFil, nCol, mines);
-}
-
 void GameField::resizeAndFill(unsigned nFil, unsigned nCol, unsigned mines){
     mNumFils= nFil;
     mNumCols= nCol;
+    mMines = mines;
+    mIsStarted = false;
 
+    mCells.clear();
     mCells.resize(mNumFils);
     for(unsigned i = 0; i < mNumFils; ++i){
         mCells[i].resize(mNumCols);
@@ -23,11 +21,8 @@ void GameField::resizeAndFill(unsigned nFil, unsigned nCol, unsigned mines){
             auto& cell = mCells[i][j];
             cell.setPosition(j* 128, i* 128);
             cell.setTexture(mTexture);
-            cell.setState(State::Hide);
         }
     }
-    mMines = mines;
-    mIsStarted = false;
 }
 
 void GameField::activate(unsigned fil, unsigned col){

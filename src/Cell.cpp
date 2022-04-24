@@ -36,7 +36,7 @@ void Cell::check(){
     }
 }
 
-void Cell::setState(State state){
+void Cell::setState(CellState state){
     mState = state;
     switch(mState) {
         case State::Hide:
